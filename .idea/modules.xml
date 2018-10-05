@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Tease.iml" filepath="$PROJECT_DIR$/Tease.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/contact/contact.iml" filepath="$PROJECT_DIR$/contact/contact.iml" />
+      <module fileurl="file://$PROJECT_DIR$/conversation/conversation.iml" filepath="$PROJECT_DIR$/conversation/conversation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/home/home.iml" filepath="$PROJECT_DIR$/home/home.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/user/user.iml" filepath="$PROJECT_DIR$/user/user.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zone/zone.iml" filepath="$PROJECT_DIR$/zone/zone.iml" />
+    </modules>
+  </component>
+</project>

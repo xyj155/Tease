@@ -1,0 +1,55 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion "28.0.2"
+    defaultConfig {
+        applicationId "com.example.xuyijie.tease"
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+        vectorDrawables.useSupportLibrary = true
+
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile project(':library')
+    compile project(':contact')
+    compile project(':conversation')
+    compile project(':home')
+    compile project(':zone')
+    compile project(':user')
+//    if (isNeedContactModule.toBoolean()) {
+//        compile project(':contact')
+//    }
+//    if (isNeedConversationModule.toBoolean()) {
+//        compile project(':conversation')
+//    }
+//    if (isNeedHomeModule.toBoolean()) {
+//        compile project(':home')
+//    }
+//    if (isNeedZoneModule.toBoolean()) {
+//        compile project(':zone')
+//    }
+//    if (isNeedMeModule.toBoolean()) {
+//        compile project(':user')
+//    }
+    compile 'com.alibaba:arouter-api:1.2.4'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
+}
