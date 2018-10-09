@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.library.weight.dialog.SweetAlertDialog;
+
 public abstract class BaseFragment extends Fragment {
     protected BaseActivity mActivity;
 
@@ -15,6 +17,8 @@ public abstract class BaseFragment extends Fragment {
     protected abstract void init(View view);
 
     protected abstract void initData(Bundle savedInstanceState);
+
+    private SweetAlertDialog dialog;
 
     @Override
     public void onAttach(Activity activity) {
@@ -25,6 +29,15 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dialog = new SweetAlertDialog(getContext());
+
+    }
+
+    public void showDialog() {
+        dialog.show();
+    }
+    public void hideDialog(){
+        dialog.dismissWithAnimation();
     }
 
     @Override

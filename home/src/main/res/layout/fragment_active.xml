@@ -1,6 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
+    <android.support.v4.widget.NestedScrollView
+        android:background="#fafafa"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:background="#ffffff"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/home_tv_search_bg"
+                    android:gravity="center"
+                    android:paddingLeft="50dp"
+                    android:paddingRight="50dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:drawableLeft="@mipmap/home_tv_scan"
+                        android:drawablePadding="5dp"
+                        android:gravity="center"
+                        android:text="大家都在搜" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="#fff"
+                    android:orientation="horizontal"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="5dp"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="3dp"
+                        android:drawableTop="@mipmap/active_top_zone"
+                        android:gravity="center"
+                        android:text="好友动态"
+                        android:textColor="#000" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="3dp"
+                        android:drawableTop="@mipmap/active_top_location"
+                        android:gravity="center"
+                        android:text="附近"
+                        android:textColor="#000" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="3dp"
+                        android:drawableTop="@mipmap/active_top_topic"
+                        android:gravity="center"
+                        android:text="兴趣部落"
+                        android:textColor="#000" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="#fafafa" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="#fff"
+                android:drawableLeft="@mipmap/active_menu_game"
+                android:drawablePadding="10dp"
+                android:drawableRight="@mipmap/common_go"
+                android:gravity="center|left"
+                android:paddingLeft="10dp"
+                android:text="游戏"
+                android:textColor="#000" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#d8d8d8" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="#fff"
+                android:drawableLeft="@mipmap/active_menu_music"
+                android:drawablePadding="10dp"
+                android:drawableRight="@mipmap/common_go"
+                android:gravity="center|left"
+                android:paddingLeft="10dp"
+                android:text="音乐"
+                android:textColor="#000" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#d8d8d8" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="#fff"
+                android:drawableLeft="@mipmap/active_menu_video"
+                android:drawablePadding="10dp"
+                android:drawableRight="@mipmap/common_go"
+                android:gravity="center|left"
+                android:paddingLeft="10dp"
+                android:text="视频"
+                android:textColor="#000" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:background="#fafafa" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="#fff"
+                android:drawableLeft="@mipmap/active_menu_sport"
+                android:drawablePadding="10dp"
+                android:drawableRight="@mipmap/common_go"
+                android:gravity="center|left"
+                android:paddingLeft="10dp"
+                android:text="运动"
+                android:textColor="#000" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

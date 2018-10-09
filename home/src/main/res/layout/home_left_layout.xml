@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="8dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:orientation="horizontal">
+
+            <com.example.library.weight.CircleImageView
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_margin="10dp"
+                app:civ_border_color="#fff"
+                app:civ_border_width="2dp"
+                android:src="@mipmap/head" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ellipsize="end"
+                android:gravity="left|center"
+                android:maxLength="8"
+                android:paddingLeft="15dp"
+                android:text="Privous"
+                android:textColor="#000"
+                android:textSize="25sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLength="15"
+            android:paddingBottom="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="8dp"
+            android:text="保持一个谦卑的心，才可以学到更多...."
+            android:textColor="#fff" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:drawableLeft="@mipmap/home_menu_vip"
+            android:drawablePadding="5dp"
+            android:gravity="center|left"
+            android:padding="15dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="会员特权"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@mipmap/home_menu_themes"
+            android:drawablePadding="5dp"
+            android:gravity="center|left"
+            android:padding="15dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="个性装扮"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@mipmap/home_menu_collection"
+            android:drawablePadding="5dp"
+            android:gravity="center|left"
+            android:padding="15dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="我的收藏"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@mipmap/home_menu_thumb"
+            android:drawablePadding="5dp"
+            android:gravity="center|left"
+            android:padding="15dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="我的相册"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@mipmap/home_menu_file"
+            android:drawablePadding="5dp"
+            android:gravity="center|left"
+            android:padding="15dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="我的文件"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@mipmap/home_menu_folder"
+            android:drawablePadding="5dp"
+            android:gravity="center|left"
+            android:padding="15dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="我的文件"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:padding="3dp"
+     android:layout_marginBottom="7dp"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="设置"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:drawablePadding="5dp"
+            android:textSize="15sp"
+            android:drawableTop="@mipmap/home_menu_setting"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="夜间"
+            android:drawablePadding="5dp"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:drawableTop="@mipmap/home_menu_dark"/>
+    </LinearLayout>
+</FrameLayout>

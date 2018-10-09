@@ -1,9 +1,9 @@
-if (!isNeedConversationModule.toBoolean()) {
+if (isNeedConversationModule.toBoolean()) {
     apply plugin: 'com.android.application'
 } else {
     apply plugin: 'com.android.library'
 }
-
+apply plugin: 'com.jakewharton.butterknife'
 android {
     compileSdkVersion 28
     buildToolsVersion "28.0.2"
@@ -13,19 +13,35 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        if (!isNeedConversationModule.toBoolean()) {
-            applicationId "com.example.xuyijie.tease"
-        }
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [moduleName: project.getName()]
             }
         }
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: "com.example.conversation",
+                JPUSH_APPKEY : "84ce34d60a03eb9cb6234cc4", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+        ]
 
         vectorDrawables.useSupportLibrary = true
 
-        multiDexEnabled true
+        multiDexEnabled true //设置multiDex模式
+        sourceSets {
+            main {
+                if (isNeedConversationModule.toBoolean()) {
+                    manifest.srcFile 'src/main/module/AndroidManifest.xml'
+                } else {
+                    manifest.srcFile 'src/main/AndroidManifest.xml'
+                    //集成开发模式下排除debug文件夹中的所有Java文件
+                    java {
+                        exclude 'debug/**'
+                    }
+                }
+            }
+        }
     }
 
     buildTypes {
@@ -37,7 +53,9 @@ android {
 }
 
 dependencies {
-    compile 'com.alibaba:arouter-api:1.2.4'
-    annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':library')
+    compile 'com.alibaba:arouter-api:1.2.4'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
 }

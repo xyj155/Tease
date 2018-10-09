@@ -2,9 +2,13 @@
 
     package="com.example.conversation">
 
-    <application android:allowBackup="true" android:label="@string/app_name"
-        android:supportsRtl="true">
+    <application
+        android:name=".App"
+        android:icon="@mipmap/ic_launcher"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activity.ConversationActivity">
 
+        </activity>
     </application>
 
 </manifest>

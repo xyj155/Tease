@@ -1,4 +1,4 @@
-package com.example.library.weight;
+package com.example.library.weight.bottom;
 
 import android.annotation.TargetApi;
 import android.content.Context;

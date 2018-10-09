@@ -1,22 +1,37 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.jakewharton.butterknife'
 
 android {
     compileSdkVersion 28
     buildToolsVersion "28.0.2"
-
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
+
         versionName "1.0"
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [moduleName: project.getName()]
-            }
+        ndk {
+            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a'
         }
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: "com.example.library",
+                JPUSH_APPKEY : "b6ef2e42f152f35e98f9aeac", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+        ]
 
+        vectorDrawables.useSupportLibrary = true
+
+        multiDexEnabled true //设置multiDex模式
+
+        //为了解决部分第三方库重复打包了META-INF的问题
+        packagingOptions{
+            exclude 'META-INF/LICENSE.txt'
+            exclude 'META-INF/NOTICE.txt'
+        }
+        lintOptions {
+            abortOnError false
+        }
     }
     buildTypes {
         release {
@@ -31,10 +46,25 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.0.0'
+    configurations.all {
+        resolutionStrategy.force "com.android.support:appcompat-v7:25.0.0"
+    }
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.alibaba:arouter-api:1.2.4'
-    annotationProcessor "com.alibaba:arouter-compiler:1.1.4"
     testCompile 'junit:junit:4.12'
-    compile 'com.jakewharton:butterknife:5.1.1'
+    compile 'cn.jiguang.sdk:jpush:3.1.5'
+    compile 'cn.jiguang.sdk:jcore:1.2.3'
+    compile 'cn.jiguang.sdk:jmessage:2.6.1'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.google.code.gson:gson:2.8.0'
+    compile 'io.reactivex:rxjava:1.3.0'
+    compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
+    compile 'com.android.support:design:25.0.0'
+    compile 'com.gyf.barlibrary:barlibrary:2.3.0'
+    // LeanCloud 基础包
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.jakewharton:butterknife:8.6.0'
 }

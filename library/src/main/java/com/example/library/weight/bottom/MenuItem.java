@@ -1,4 +1,4 @@
-package com.example.library.weight;
+package com.example.library.weight.bottom;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -13,12 +13,6 @@ import android.widget.TextView;
 
 import com.example.library.R;
 
-
-/**
- * author: chensen
- * date: 2017年03月17日10:19
- * desc:
- */
 
 public class MenuItem extends FrameLayout {
 

@@ -10,14 +10,21 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [moduleName: project.getName()]
             }
         }
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: "com.example.xuyijie.tease",
+                JPUSH_APPKEY : "b6ef2e42f152f35e98f9aeac", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+        ]
+
         vectorDrawables.useSupportLibrary = true
 
-        multiDexEnabled true
+        multiDexEnabled true //设置multiDex模式
     }
     buildTypes {
         release {
@@ -25,30 +32,31 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
 }
 
 dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':library')
-    compile project(':contact')
-    compile project(':conversation')
-    compile project(':home')
-    compile project(':zone')
-    compile project(':user')
-//    if (isNeedContactModule.toBoolean()) {
-//        compile project(':contact')
-//    }
-//    if (isNeedConversationModule.toBoolean()) {
-//        compile project(':conversation')
-//    }
-//    if (isNeedHomeModule.toBoolean()) {
-//        compile project(':home')
-//    }
-//    if (isNeedZoneModule.toBoolean()) {
-//        compile project(':zone')
-//    }
-//    if (isNeedMeModule.toBoolean()) {
-//        compile project(':user')
-//    }
+    if (!isNeedContactModule.toBoolean()) {
+        compile project(':contact')
+    }
+    if (!isNeedConversationModule.toBoolean()) {
+        compile project(':conversation')
+    }
+    if (!isNeedHomeModule.toBoolean()) {
+        compile project(':home')
+    }
+    if (!isNeedZoneModule.toBoolean()) {
+        compile project(':zone')
+    }
+    if (!isNeedMeModule.toBoolean()) {
+        compile project(':user')
+    }
+
     compile 'com.alibaba:arouter-api:1.2.4'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'

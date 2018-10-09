@@ -1,9 +1,9 @@
-if (!isNeedContactModule.toBoolean()) {
+if (isNeedContactModule.toBoolean()) {
     apply plugin: 'com.android.application'
 } else {
     apply plugin: 'com.android.library'
 }
-
+apply plugin: 'com.jakewharton.butterknife'
 
 android {
     compileSdkVersion 28
@@ -14,19 +14,33 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        if (!isNeedContactModule.toBoolean()) {
-            applicationId "com.example.xuyijie.tease"
-        }
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [moduleName: project.getName()]
             }
         }
-
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: "com.example.contact",
+                JPUSH_APPKEY : "b6ef2e42f152f35e98f9aeac", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+        ]
+        sourceSets {
+            main {
+                if (isNeedContactModule.toBoolean()) {
+                    manifest.srcFile 'src/main/module/AndroidManifest.xml'
+                } else {
+                    manifest.srcFile 'src/main/AndroidManifest.xml'
+                    //集成开发模式下排除debug文件夹中的所有Java文件
+                    java {
+                        exclude 'debug/**'
+                    }
+                }
+            }
+        }
         vectorDrawables.useSupportLibrary = true
 
-        multiDexEnabled true
+        multiDexEnabled true //设置multiDex模式
     }
 
 
@@ -40,6 +54,7 @@ android {
 
 dependencies {
     compile 'com.alibaba:arouter-api:1.2.4'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
     compile project(':library')
 }

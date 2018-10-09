@@ -8,6 +8,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.gyf.barlibrary.ImmersionBar;
+
+import cn.jpush.im.android.api.model.Conversation;
+
 public abstract class BaseActivity extends FragmentActivity {
     /***是否显示标题栏*/
     private boolean isshowtitle = true;
@@ -18,18 +22,17 @@ public abstract class BaseActivity extends FragmentActivity {
     /***获取TAG的activity名称**/
     protected final String TAG = this.getClass().getSimpleName();
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (!isshowtitle) {
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
-        }
-        if (isshowstate) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
         setContentView(intiLayout());
         initView();
         initData();
+    }
+
+    public void setNotitle() {
+        ImmersionBar.with(this).init();
     }
 
     /**
@@ -47,12 +50,7 @@ public abstract class BaseActivity extends FragmentActivity {
      */
     public abstract void initData();
 
-    /**
-     * 是否设置标题栏     *     * @return
-     */
-    public void setTitle(boolean ishow) {
-        isshowtitle = ishow;
-    }
+
 
     /**
      * 设置是否显示状态栏     * @param ishow

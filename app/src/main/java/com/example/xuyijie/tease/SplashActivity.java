@@ -8,6 +8,7 @@ import android.util.Log;
 
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.example.library.arouter.ArouterUrl;
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -17,7 +18,13 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ARouter.getInstance().build(ArouterUrl.HOMEACTIVITY).navigation();
+                finish();
+            }
+        }, 2000);
 
-        ARouter.getInstance().build("/home/main").navigation();
     }
 }
