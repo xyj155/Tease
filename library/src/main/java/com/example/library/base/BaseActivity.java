@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.example.library.weight.dialog.SweetAlertDialog;
 import com.gyf.barlibrary.ImmersionBar;
 
 import java.util.List;
@@ -27,6 +28,8 @@ public abstract class BaseActivity extends FragmentActivity {
     private static Toast toast;
     /***获取TAG的activity名称**/
     protected final String TAG = this.getClass().getSimpleName();
+    public SweetAlertDialog dialog;
+
 
 
     @Override
@@ -35,6 +38,16 @@ public abstract class BaseActivity extends FragmentActivity {
         setContentView(intiLayout());
         initView();
         initData();
+
+
+    }
+    public void showmDialog(String msg) {
+        dialog = new SweetAlertDialog(this);
+        dialog.setTitleText(msg);
+        dialog.show();
+    }
+    public void hidemDialog(){
+        dialog.dismissWithAnimation();
     }
     /**
      * 判断某个Activity 界面是否在前台

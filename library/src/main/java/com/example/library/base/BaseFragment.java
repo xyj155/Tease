@@ -20,6 +20,12 @@ public abstract class BaseFragment extends Fragment {
 
     private SweetAlertDialog dialog;
 
+    public void showDialog() {
+        dialog.show();
+    }
+    public void hideDialog(){
+        dialog.dismissWithAnimation();
+    }
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -33,12 +39,6 @@ public abstract class BaseFragment extends Fragment {
 
     }
 
-    public void showDialog() {
-        dialog.show();
-    }
-    public void hideDialog(){
-        dialog.dismissWithAnimation();
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

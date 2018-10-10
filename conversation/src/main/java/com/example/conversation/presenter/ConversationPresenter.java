@@ -81,7 +81,7 @@ public class ConversationPresenter implements ConversationContract.Presenter {
      */
     @Override
     public void login(String username,String password) {
-        view.showDialog("数据加载中...");
+        view.showDialog("登陆中...");
         IMUtils.login(username, password, new BasicCallback() {
             @Override
             public void gotResult(int i, final String s) {
