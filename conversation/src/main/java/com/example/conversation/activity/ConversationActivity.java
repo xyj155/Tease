@@ -2,11 +2,9 @@ package com.example.conversation.activity;
 
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -24,18 +22,20 @@ import com.example.conversation.presenter.ConversationPresenter;
 import com.example.library.arouter.ArouterUrl;
 import com.example.library.base.BaseActivity;
 import com.example.library.util.IMUtils;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.event.NotificationClickEvent;
 import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.Message;
-import cn.jpush.im.api.BasicCallback;
-
-import static android.R.attr.data;
-import static android.R.id.list;
 
 
 @Route(path = ArouterUrl.CONVERSATION)
@@ -52,6 +52,9 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
     private TextView tvClose;
     private LinearLayoutManager linearLayoutManager;
     private String fromID;
+    private int count;
+    private SmartRefreshLayout slChat;
+    private List<ConversationEntity> conversationEntity = new ArrayList<>();
 
     @Override
     public int intiLayout() {
@@ -62,6 +65,7 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
     public void initView() {
         // TODO: add setContentView(...) invocation
         etInput = findViewById(R.id.et_input);
+        slChat = findViewById(R.id.rl_chat);
         tvUsername = findViewById(R.id.tv_username);
         btnSubmit = findViewById(R.id.btn_submit);
         ryConversation = findViewById(R.id.ry_conversation);
@@ -77,6 +81,33 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
         ryConversation.setFocusableInTouchMode(false);
         ryConversation.setHasFixedSize(true);
         ryConversation.setAdapter(conversationAdapter);
+        slChat.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshLayout) {
+                slChat.finishRefresh(300);
+                Log.i(TAG, "onRefresh: " + count);
+                count = count - 24;
+                if (count < 12) {
+                    Log.i(TAG, "onLoadMore: " + count);
+                    List<Message> messagesFromOldest = singleConversation.getMessagesFromOldest(count, 12);
+                    List<ConversationEntity> list = new ArrayList<>();
+                    for (Message message1 : messagesFromOldest) {
+                        if (message1.getFromName().equals("123456")) {
+                            list.add(ConversationEntity.client(message1));
+                        } else {
+                            list.add(ConversationEntity.chat(message1));
+                        }
+                    }
+                    Collections.reverse(list);
+                    for (ConversationEntity conversationEntity1 : list) {
+                        conversationEntity.add(0, conversationEntity1);
+                        conversationAdapter.notifyItemInserted(0);
+                        ryConversation.getLayoutManager().scrollToPosition(list.size());
+                    }
+                }
+
+            }
+        });
     }
 
 
@@ -154,9 +185,9 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
     @Override
     public void setConversation(List<ConversationEntity> conversationEntities) {
         conversationAdapter.closeLoadAnimation();
-        conversationAdapter.addData(conversationEntities);
+        conversationEntity.addAll(conversationEntities);
+        conversationAdapter.replaceData(conversationEntity);
         conversationAdapter.notifyDataSetChanged();
-        Log.i(TAG, "setConversation: ");
         ryConversation.setFocusableInTouchMode(false);
         Log.i(TAG, "setConversation: " + singleConversation.getAllMessage().size());
         ryConversation.smoothScrollToPosition(singleConversation.getAllMessage().size());
@@ -165,14 +196,23 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
     @Override
     public void loginSuccess() {
         singleConversation = Conversation.createSingleConversation("123456");
-        presenter.getHistoryMessage("123456");
+        count = singleConversation.getAllMessage().size();
+        Log.i(TAG, "loginSuccess: " + count);
+//        count = singleConversation.getAllMessage().size();
+        presenter.getHistoryMessage("123456", count - 12);
+        ryConversation.smoothScrollToPosition(singleConversation.getAllMessage().size());
+//        conversationAdapter.setStartUpFetchPosition(singleConversation.getAllMessage().size());
     }
+
 
     @Override
     public void loadHistoryMessage(List<ConversationEntity> messages) {
-        conversationAdapter.replaceData(messages);
+        conversationAdapter.setStartUpFetchPosition(messages.size());
+        conversationEntity.addAll(messages);
+        conversationAdapter.setNewData(conversationEntity);
         Log.i(TAG, "loadHistoryMessage: ");
-        ryConversation.smoothScrollToPosition(singleConversation.getAllMessage().size());
+//        conversationAdapter.addHeaderView(View.inflate(ConversationActivity.this, R.layout.ry_loadmore_isloding, null));
+//        ryConversation.smoothScrollToPosition(singleConversation.getAllMessage().size());
     }
 
     @Override

@@ -15,6 +15,8 @@ import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.Message;
 import cn.jpush.im.api.BasicCallback;
 
+import static cn.jpush.android.api.b.t;
+
 /**
  * Created by Xuyijie on 2018/10/9.
  */
@@ -101,9 +103,9 @@ public class ConversationPresenter implements ConversationContract.Presenter {
      */
 
     @Override
-    public void getHistoryMessage(String username) {
+    public void getHistoryMessage(String username,int page) {
         Conversation conversation = JMessageClient.getSingleConversation(username);
-        List<Message> allMessage = conversation.getAllMessage();
+        List<Message> allMessage = conversation.getMessagesFromOldest(page,12);
         List<ConversationEntity> list = new ArrayList<>();
         for (Message message1 : allMessage) {
             if (message1.getFromName().equals(username)) {

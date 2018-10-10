@@ -60,6 +60,6 @@ public interface ConversationContract {
          */
         void login(String username,String password);
 
-        void getHistoryMessage(String username);
+        void getHistoryMessage(String username,int page);
     }
 }
