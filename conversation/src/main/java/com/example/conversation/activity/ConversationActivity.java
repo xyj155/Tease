@@ -34,6 +34,7 @@ import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.Message;
 import cn.jpush.im.api.BasicCallback;
 
+import static android.R.attr.data;
 import static android.R.id.list;
 
 
@@ -153,12 +154,12 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
     @Override
     public void setConversation(List<ConversationEntity> conversationEntities) {
         conversationAdapter.closeLoadAnimation();
-        conversationAdapter.replaceData(conversationEntities);
+        conversationAdapter.addData(conversationEntities);
+        conversationAdapter.notifyDataSetChanged();
         Log.i(TAG, "setConversation: ");
         ryConversation.setFocusableInTouchMode(false);
         Log.i(TAG, "setConversation: " + singleConversation.getAllMessage().size());
         ryConversation.smoothScrollToPosition(singleConversation.getAllMessage().size());
-        conversationAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -196,8 +197,8 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
                         etInput.setText("");
                         messages.add(message);
                         presenter.sendMessage(message);
-//                        conversationAdapter.addData(messages);
                         presenter.messageToEntity(messages, "123456");
+                        messages.clear();
                     }
                 }
                 break;
