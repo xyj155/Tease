@@ -22,11 +22,10 @@
         android:layout_height="wrap_content">
     <com.example.library.weight.bubble.BubbleTextView
         android:id="@+id/tv_main_item_content"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="5dp"
         android:paddingTop="5dp"
-        android:layout_weight="1"
         android:padding="10dp"
         android:textColor="#ffffff"
         android:layout_marginRight="80dp"
@@ -37,7 +36,7 @@
         android:paddingRight="7dp"
         app:arrowCenter="true"
         app:arrowHeight="10dp"
-        app:arrowLocation="right"
+        app:arrowLocation="left"
         app:arrowPosition="14dp"
         app:arrowWidth="8dp"
         app:bubbleColor="#10b5f6" />

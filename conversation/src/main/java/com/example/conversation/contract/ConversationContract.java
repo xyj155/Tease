@@ -24,7 +24,7 @@ public interface ConversationContract {
         /**
          * 获取会话
          */
-        void getConversation(List<ConversationEntity> conversationEntities);
+        void setConversation(List<ConversationEntity> conversationEntities);
 
         /**
          * 登录是否成功

@@ -1,14 +1,20 @@
 package com.example.library.base;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.gyf.barlibrary.ImmersionBar;
+
+import java.util.List;
 
 import cn.jpush.im.android.api.model.Conversation;
 
@@ -29,6 +35,27 @@ public abstract class BaseActivity extends FragmentActivity {
         setContentView(intiLayout());
         initView();
         initData();
+    }
+    /**
+     * 判断某个Activity 界面是否在前台
+     *
+     * @param context
+     * @param activityName 某个界面名称
+     * @return
+     */
+    public static boolean isForeground(Context context, String activityName) {
+        if (context == null || TextUtils.isEmpty(activityName)) {
+            return false;
+        }
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> list = am.getRunningTasks(1);
+        if (list != null && list.size() > 0) {
+            ComponentName cpn = list.get(0).topActivity;
+            if (activityName.equals(cpn.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void setNotitle() {

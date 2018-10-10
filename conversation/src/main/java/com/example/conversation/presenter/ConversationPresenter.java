@@ -11,12 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.jpush.im.android.api.JMessageClient;
-import cn.jpush.im.android.api.content.MessageContent;
 import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.Message;
 import cn.jpush.im.api.BasicCallback;
-
-import static android.R.id.message;
 
 /**
  * Created by Xuyijie on 2018/10/9.
@@ -74,7 +71,7 @@ public class ConversationPresenter implements ConversationContract.Presenter {
                 list.add(ConversationEntity.chat(message1));
             }
         }
-        view.getConversation(list);
+        view.setConversation(list);
     }
 
     /**

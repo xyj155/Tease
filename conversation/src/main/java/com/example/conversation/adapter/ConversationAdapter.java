@@ -18,11 +18,15 @@ public class ConversationAdapter extends BaseMultiItemQuickAdapter<ConversationE
      *
      * @param data A new list is created out of this one to avoid mutable list
      */
+
     public ConversationAdapter(List<ConversationEntity> data) {
         super(data);
+
         addItemType(ConversationEntity.TYPE_CHAT_MESSAGE, R.layout.conversation_ry_item_chat_chatfriends);//发送
         addItemType(ConversationEntity.TYPE_CLIENT_MESSAGE, R.layout.conversation_ry_item_chat_user);//接受
     }
+
+
 
     @Override
     protected void convert(BaseViewHolder helper, ConversationEntity item) {
