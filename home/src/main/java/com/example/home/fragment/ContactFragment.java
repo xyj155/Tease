@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.home.R;
 import com.example.home.contact.ContactListFragment;
 import com.example.home.contact.DeviceFragment;
@@ -23,6 +24,7 @@ import java.util.List;
  * Created by Xuyijie on 2018/10/5.
  */
 
+@Route(path = "/fragment/contact")
 public class ContactFragment extends BaseFragment {
     private ViewPager vpHome;
     private PagerSlidingTabStrip ptHome;

@@ -22,7 +22,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="36dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="5dp"
@@ -91,10 +91,11 @@
                 android:background="#fafafa" />
 
             <TextView
+                android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="#fff"
-                android:drawableLeft="@mipmap/active_menu_game"
+                android:drawableLeft="@mipmap/qeo"
                 android:drawablePadding="10dp"
                 android:drawableRight="@mipmap/common_go"
                 android:gravity="center|left"
@@ -111,7 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="#fff"
-                android:drawableLeft="@mipmap/active_menu_music"
+                android:drawableLeft="@mipmap/qep"
                 android:drawablePadding="10dp"
                 android:drawableRight="@mipmap/common_go"
                 android:gravity="center|left"
@@ -127,7 +128,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="#fff"
-                android:drawableLeft="@mipmap/active_menu_video"
+                android:drawableLeft="@mipmap/qeq"
+                android:drawablePadding="10dp"
+                android:drawableRight="@mipmap/common_go"
+                android:gravity="center|left"
+                android:paddingLeft="10dp"
+                android:text="视频"
+                android:textColor="#000" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#d8d8d8" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="#fff"
+                android:drawableLeft="@mipmap/qer"
+                android:drawablePadding="10dp"
+                android:drawableRight="@mipmap/common_go"
+                android:gravity="center|left"
+                android:paddingLeft="10dp"
+                android:text="视频"
+                android:textColor="#000" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#d8d8d8" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="#fff"
+                android:drawableLeft="@mipmap/qet"
                 android:drawablePadding="10dp"
                 android:drawableRight="@mipmap/common_go"
                 android:gravity="center|left"
@@ -143,7 +176,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="#fff"
-                android:drawableLeft="@mipmap/active_menu_sport"
+                android:drawableLeft="@mipmap/qeu"
                 android:drawablePadding="10dp"
                 android:drawableRight="@mipmap/common_go"
                 android:gravity="center|left"

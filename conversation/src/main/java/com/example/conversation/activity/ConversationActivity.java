@@ -3,6 +3,9 @@ package com.example.conversation.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -18,24 +21,34 @@ import com.example.conversation.R;
 import com.example.conversation.adapter.ConversationAdapter;
 import com.example.conversation.contract.ConversationContract;
 import com.example.conversation.entity.ConversationEntity;
+import com.example.conversation.listener.EndLessOnScrollListener;
 import com.example.conversation.presenter.ConversationPresenter;
 import com.example.library.arouter.ArouterUrl;
 import com.example.library.base.BaseActivity;
 import com.example.library.util.IMUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.content.TextContent;
 import cn.jpush.im.android.api.event.NotificationClickEvent;
 import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.Message;
+
+import static android.R.id.list;
 
 
 @Route(path = ArouterUrl.CONVERSATION)
@@ -73,10 +86,8 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
         tvClose.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
         linearLayoutManager = new LinearLayoutManager(ConversationActivity.this, LinearLayoutManager.VERTICAL, false);
-        ryConversation.smoothScrollToPosition(conversationAdapter.getItemCount());
         ryConversation.setLayoutManager(linearLayoutManager);
         ryConversation.setHasFixedSize(true);
-        conversationAdapter.closeLoadAnimation();
         conversationAdapter.notifyDataSetChanged();
         ryConversation.setFocusableInTouchMode(false);
         ryConversation.setHasFixedSize(true);
@@ -84,28 +95,35 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
         slChat.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
-                slChat.finishRefresh(300);
-                Log.i(TAG, "onRefresh: " + count);
-                count = count - 24;
-                if (count < 12) {
-                    Log.i(TAG, "onLoadMore: " + count);
-                    List<Message> messagesFromOldest = singleConversation.getMessagesFromOldest(count, 12);
-                    List<ConversationEntity> list = new ArrayList<>();
+
+                if (count > 0) {
+                    Log.i(TAG, "onRefresh: count=" + count);
+                    List<Message> messagesFromOldest = new ArrayList<Message>();
+                    List<ConversationEntity> list = new ArrayList<ConversationEntity>();
+                    if (count > 12) {//这个是极光SDK 第一个参数是请求的位置  第二个是请求的条数 减一
+                        count = count - 12;//每次获取12个
+                        List<Message> messagesFromOldest1 = singleConversation.getMessagesFromOldest(count, 12);
+                        messagesFromOldest.addAll(messagesFromOldest1);//获取位置   获取条数
+                        Log.i(TAG, "onRefresh: " + messagesFromOldest1.size());
+                    } else { // 第二次加载的数据比较多啊，不是 12 条了吧等我回家帮你看看吧，我路上想想我要下班了 好
+                        List<Message> messagesFromOldest1 = singleConversation.getMessagesFromOldest(0, count);
+                        messagesFromOldest.addAll(messagesFromOldest1);//获取位置   获取条数
+                        Log.i(TAG, "onRefresh231: " + messagesFromOldest1.size());
+                        count = 0;
+                    }
                     for (Message message1 : messagesFromOldest) {
+                        TextContent content = (TextContent) message1.getContent();
+//                        Log.i(TAG, "onRefresh: " + content.getText());
                         if (message1.getFromName().equals("123456")) {
                             list.add(ConversationEntity.client(message1));
                         } else {
                             list.add(ConversationEntity.chat(message1));
                         }
                     }
-                    Collections.reverse(list);
-                    for (ConversationEntity conversationEntity1 : list) {
-                        conversationEntity.add(0, conversationEntity1);
-                        conversationAdapter.notifyItemInserted(0);
-                        ryConversation.getLayoutManager().scrollToPosition(list.size());
-                    }
+                    slChat.finishRefresh(200);
+                    conversationAdapter.addData(0, list);
+                    list.clear();
                 }
-
             }
         });
     }
@@ -182,6 +200,11 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
 
     }
 
+    /**
+     * 创建对话
+     *
+     * @param conversationEntities
+     */
     @Override
     public void setConversation(List<ConversationEntity> conversationEntities) {
         conversationAdapter.closeLoadAnimation();
@@ -193,26 +216,31 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
         ryConversation.smoothScrollToPosition(singleConversation.getAllMessage().size());
     }
 
+    /**
+     * 登陆成功
+     */
     @Override
     public void loginSuccess() {
         singleConversation = Conversation.createSingleConversation("123456");
-        count = singleConversation.getAllMessage().size();
+        count = singleConversation.getAllMessage().size();//获取历史消息总条数 1
         Log.i(TAG, "loginSuccess: " + count);
-//        count = singleConversation.getAllMessage().size();
-        presenter.getHistoryMessage("123456", count - 12);
-        ryConversation.smoothScrollToPosition(singleConversation.getAllMessage().size());
-//        conversationAdapter.setStartUpFetchPosition(singleConversation.getAllMessage().size());
+        count = count - 12;//减去已经获取的
+        presenter.getHistoryMessage("123456", count);//获取历史聊天记录
+        ryConversation.smoothScrollToPosition(conversationAdapter.getItemCount());//滑动到最后一个item
     }
 
+    /**
+     * 获取历史聊天记录
+     *
+     * @param messages
+     */
 
     @Override
     public void loadHistoryMessage(List<ConversationEntity> messages) {
         conversationAdapter.setStartUpFetchPosition(messages.size());
         conversationEntity.addAll(messages);
-        conversationAdapter.setNewData(conversationEntity);
+        conversationAdapter.replaceData(conversationEntity);
         Log.i(TAG, "loadHistoryMessage: ");
-//        conversationAdapter.addHeaderView(View.inflate(ConversationActivity.this, R.layout.ry_loadmore_isloding, null));
-//        ryConversation.smoothScrollToPosition(singleConversation.getAllMessage().size());
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.home.activity;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
 import com.example.home.R;
 import com.example.home.fragment.ActiveFragment;
@@ -157,7 +159,7 @@ public class HomeActivity extends BaseActivity implements NavMenuLayout.OnItemSe
                 tvMenu.setVisibility(View.GONE);
                 tvTitle.setText("消息");
                 if (fragmentMessage == null) {
-                    fragmentMessage = new MessageFragment();
+                    fragmentMessage = (MessageFragment) ARouter.getInstance().build("/fragment/message").navigation();
                     transaction.add(R.id.fl_container, fragmentMessage);
                 } else {
                     transaction.show(fragmentMessage);
@@ -169,7 +171,7 @@ public class HomeActivity extends BaseActivity implements NavMenuLayout.OnItemSe
                 tvTitle.setText("联系人");
                 tvMenu.setText("添加");
                 if (contactFragment == null) {
-                    contactFragment = new ContactFragment();
+                    contactFragment = (ContactFragment) ARouter.getInstance().build("/fragment/contact").navigation();
                     transaction.add(R.id.fl_container, contactFragment);
                 } else {
                     transaction.show(contactFragment);
@@ -181,7 +183,7 @@ public class HomeActivity extends BaseActivity implements NavMenuLayout.OnItemSe
                 tvMenu.setText("更多");
                 tvTitle.setText("动态");
                 if (activeFragment == null) {
-                    activeFragment = new ActiveFragment();
+                    activeFragment =  (ActiveFragment) ARouter.getInstance().build("/fragment/active").navigation();
                     transaction.add(R.id.fl_container, activeFragment);
                 } else {
                     transaction.show(activeFragment);

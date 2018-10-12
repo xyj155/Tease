@@ -10,6 +10,7 @@ public class ConversationEntity implements MultiItemEntity {
 
     public static final int TYPE_CLIENT_MESSAGE = 2;
 
+
     private int itemType;
 
     private Message data;
